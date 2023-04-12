@@ -1,0 +1,12 @@
+apiVersion: v2
+name: angular
+version: 0.0.0
+description: Angular helm chart
+appVersion: 0.0.0
+keywords:
+- app
+- angular
+maintainers:
+- name: Tkit Developer
+  email: tkit-dev@1000kit.org
+

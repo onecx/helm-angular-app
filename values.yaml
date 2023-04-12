@@ -1,0 +1,89 @@
+global:
+  #Inject config maps
+  inject_maps: []
+
+  routing:
+    type:
+
+  # global operator values
+  operator:
+    keycloak:
+      realm:
+
+# Application image
+image:
+  # Docker registry
+  registry: "oci://ghcr.io/"
+  # Docker repository (application name)
+  repository: "change-me"
+  # Docker image tag (application version)
+  tag: "master"
+
+# Image pull secrets
+imagePullSecrets: 
+
+health:
+  url: /healthcheck
+
+# pod
+pod:
+  port: 8080
+
+# service
+service:
+  port: 8080
+
+# Route
+routing:
+  # Enable or disable route
+  enabled: false
+  # Default URL
+  default_url: "change.com"
+  # path
+  path:
+  # host name
+  hostName:
+  # traefik
+  type: traefik
+  # stripprefix for treafik
+  stripprefix: false
+
+# Replicas
+replicas: 1
+
+# Service account suffix
+# serviceAccountName =  Release.Name-serviceAccountSuffix
+serviceAccountSuffix:
+
+# Inject config maps
+inject_maps: []
+## @param nameOverride String to partially override common.names.fullname
+##
+nameOverride: ""
+## @param fullnameOverride String to fully override common.names.fullname
+##
+fullnameOverride: ""
+## @param commonLabels Labels to add to all deployed objects
+##
+
+# Kubernetes operator configuration
+operator:
+  # APM operator
+  apm:
+    # enabled or disable config for operator
+    enabled: false
+    # CSV file in string
+    content:
+
+  # Keycloak operator
+  keycloak:
+    # enabled or disable config for operator
+    enabled: false
+    # keycloak realm
+    realm: master
+    # JSON file in string
+    client:
+    # JSON file in string
+    roles:
+    # JSON file in string
+    realms:

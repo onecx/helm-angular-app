@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "common.names.fullname" . }}
+  labels:
+    app: {{ include "common.names.fullname" . }}
+{{ include "angular.labels.common" $ | indent 4 }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "common.names.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "common.names.fullname" . }}
+{{ include "angular.labels.common" $ | indent 8 }}
+      annotations:
+{{- range $map_name := .Values.inject_maps }}
+        checksum/{{ $map_name | replace "-" "_" }}: {{ index $.Values.global ($map_name | replace "-" "_") }}
+{{- end }}
+{{- range $map_name := .Values.global.inject_maps }}
+        checksum/{{ $map_name | replace "-" "_" }}: {{ index $.Values.global ($map_name | replace "-" "_") }}
+{{- end }} 
+    spec:
+      {{- if .Values.serviceAccountSuffix }} 
+      serviceAccountName: {{ include "common.names.fullname" . }}-{{ .Values.serviceAccountSuffix }}
+      {{- end }}
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+      {{- end }}    
+      containers:
+      - name: nginx
+        image: {{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.pod.port }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.health.url }}
+            port: {{ .Values.pod.port }}
+            scheme: HTTP
+          initialDelaySeconds: 3
+          periodSeconds: 30
+          timeoutSeconds: 3
+          successThreshold: 1
+          failureThreshold: 5
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.health.url }}
+            port: {{ .Values.pod.port }}
+            scheme: HTTP
+          initialDelaySeconds: 3
+          periodSeconds: 30
+          timeoutSeconds: 3
+          successThreshold: 1
+          failureThreshold: 5                        
+        {{- $envVals := .Values.global.env -}}        
+        {{ if .Values.routing.enabled }}
+        {{ if .Values.routing.path }}
+        {{- $appBaseHref := dict "APP_BASE_HREF" .Values.routing.path -}}
+        {{- $envVals = merge $appBaseHref $envVals -}}
+        {{ end }}
+        {{ end }}        
+        {{- if (.Values.env) }} 
+        {{- $envVals = merge .Values.env $envVals -}}
+        {{- end }}        
+       
+        env:
+        - name: APP_VERSION
+          value: {{ .Values.version | default .Values.image.tag }}  
+        {{- if $envVals }}
+        {{- range $key,$val := $envVals }}
+        - name: {{ $key }}
+          value: {{ tpl ($val|toString) $ | quote }}
+        {{- end }}
+        {{- end }}        
+        {{- $im := .Values.global.inject_maps -}}
+        {{- if (.Values.inject_maps) }}
+        {{- $im = concat .Values.inject_maps .Values.global.inject_maps | uniq -}}
+        {{- end }}
+        {{- if $im }}
+        envFrom:
+{{- range $map_name := $im }}
+          - configMapRef:
+              name: {{ $map_name }}
+{{- end }}
+        {{- end }}

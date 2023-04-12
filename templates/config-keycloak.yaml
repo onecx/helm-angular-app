@@ -1,0 +1,24 @@
+{{ if .Values.operator.keycloak.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ include "common.names.fullname" . }}-kc-config"
+  annotations:
+    tkit.kc.cli/target-realm: {{ .Values.global.operator.keycloak.realm | default .Values.operator.keycloak.realm }}
+  labels:
+    app: {{ include "common.names.fullname" . }}
+{{ include "angular.labels.common" $ | indent 4 }}
+data:
+{{ if .Values.operator.keycloak.client }}
+  client: |-
+{{ $.Values.operator.keycloak.client | indent 4 }}  
+{{- end }}
+{{ if .Values.operator.keycloak.roles }}
+  roles: |-
+{{ $.Values.operator.keycloak.roles | indent 4 }}
+{{- end }}
+{{ if .Values.operator.keycloak.realms }}
+  realms: |-
+{{ $.Values.operator.keycloak.realms | indent 4 }}  
+{{- end }}
+{{- end }}
