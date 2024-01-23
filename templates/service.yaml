@@ -1,15 +1,15 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ template "app.fullname" $ }}
+  name: {{ include "app.fullname" . }}
   labels:
-    app: {{ template "app.fullname" $ }}
+    app: {{ include "app.fullname" . }}
 {{ include "app.labels.common" $ | indent 4 }}
   annotations:
-    description: {{ template "app.fullname" $ }}
+    description: {{ include "app.fullname" . }}
 spec:
   selector:
-    app: {{ template "app.fullname" $ }}
+    app: {{ include "app.fullname" . }}
   ports:
     - name: http
       protocol: TCP

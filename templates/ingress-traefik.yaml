@@ -3,9 +3,9 @@
 kind: IngressRoute
 apiVersion: traefik.io/v1alpha1
 metadata:
-  name: {{ template "app.fullname" $ }}
+  name: {{ include "app.fullname" . }}
   labels:
-    app: {{ template "app.fullname" $ }}
+    app: {{ include "app.fullname" . }}
 {{ include "app.labels.common" $ | indent 4 }}    
 spec:
   entryPoints:
@@ -17,7 +17,7 @@ spec:
     {{ end }}
   routes:
     - kind: Rule
-      match: Host(`{{ template "app.ingress.host" $ }}`){{ include "app.traefik.path" $ }}
+      match: Host(`{{ include "app.ingress.host" . | trim }}`){{ include "app.traefik.path" $ }}
       {{ if .Values.routing.traefik.middleware.enabled }}
       middlewares:
         - name: {{ .Values.routing.traefik.middleware.name }}
