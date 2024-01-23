@@ -10,19 +10,35 @@ global:
     keycloak:
       realm:
 
+# Name of the instance, default {{ .Release.Name }}-{{ .Values.name | default .Chart.Name }}
+name:
+# ID of the application instance, default
+appId:
+
 # Application image
 image:
   # Docker registry
-  registry: "oci://ghcr.io/"
+  registry: "ghcr.io"
   # Docker repository (application name)
   repository: "change-me"
   # Docker image tag (application version)
   tag: "master"
+  # pull policy Always | IfNotPresent | Never
+  pull: IfNotPresent
 
 # Image pull secrets
 imagePullSecrets: 
 
-health:
+# health check configuration
+livenessProbe:
+  url: /healthcheck
+
+# rediness proble configuration
+readinessProbe:
+  url: /healthcheck
+
+# start up probe configuration
+startupProbe:
   url: /healthcheck
 
 # pod
@@ -37,43 +53,107 @@ service:
 routing:
   # Enable or disable route
   enabled: false
+  
   # Default URL
   default_url: "change.com"
+  
   # path
   path:
+  
   # host name
   hostName:
-  # traefik
-  type: traefik
-  # stripprefix for treafik
-  stripprefix: false
+
+  # traefik | ingress
+  type: none
+
+  traefik:
+    # middleware
+    middleware:
+      # middleware for treafik
+      enabled: false
+      # traefik middleware name
+      name: 
 
 # Replicas
 replicas: 1
 
-# Service account suffix
-# serviceAccountName =  Release.Name-serviceAccountSuffix
-serviceAccountSuffix:
+# custom service account
+serviceAccount:
+  # enable custom service accoung
+  enabled: false
+  # generate custom name <app-name>.<suffix>
+  suffix:  
+  # fix name of the service account
+  name: 
 
 # Inject config maps
 inject_maps: []
-## @param nameOverride String to partially override common.names.fullname
-##
-nameOverride: ""
-## @param fullnameOverride String to fully override common.names.fullname
-##
-fullnameOverride: ""
-## @param commonLabels Labels to add to all deployed objects
-##
+
+# Custom env variables as YAML structure
+envCustom: 
 
 # Kubernetes operator configuration
 operator:
-  # APM operator
-  apm:
-    # enabled or disable config for operator
+  # permissions
+  permission:
+    # enable or disable configuration for operator
     enabled: false
-    # CSV file in string
-    content:
+
+    spec:      
+      # default deployment name (release_name-name)
+      appId:
+      # map of permissions
+      # resource:
+      #    action: description
+      permissions:
+
+  # microfrontend
+  microfrontend:
+    # enable or disable configuration for operator
+    enabled: false
+
+    # default remote entry path suffix
+    entrySuffix: remoteEntry.js
+
+    # definnition
+    spec:
+            
+      description: change-me
+      
+      exposedModule: change-me
+      
+      iconName:
+
+      note: change-me
+
+      # list of strings
+      classifications: []      
+
+      # list of name and path
+      # - name:
+      #   path:
+      endpoints:
+
+      # technology is free text
+      technology: ANGULAR
+
+      # contact email
+      contact: onecx@1000kit.org
+
+      # default is app.routing.path
+      remoteBaseUrl:
+      
+      # default is app.routing.path + entrySuffix
+      remoteEntry:
+
+      # default release name (product name)
+      productName:      
+      
+      # default deployment name (release_name-name or appId)
+      appId:
+
+      # default deployment name (release_name-name)
+      appName:
 
   # Keycloak operator
   keycloak:

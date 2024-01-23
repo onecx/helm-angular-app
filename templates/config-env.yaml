@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ template "app.fullname" $ }}-env"
+  labels:
+    app: {{ template "app.fullname" $ }}
+{{ include "app.labels.common" $ | indent 4 }}
+data:
+  APP_VERSION: {{ .Values.image.tag }}
+  APP_ID: {{ template "app.id" $ }}
+  {{ if and .Values.routing.enabled .Values.routing.path }}APP_BASE_HREF: {{ .Values.routing.path }}{{ end }}

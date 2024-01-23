@@ -1,5 +1,5 @@
 apiVersion: v2
-name: angular
+name: helm-angular-app
 version: 0.0.0
 description: Angular helm chart
 appVersion: 0.0.0

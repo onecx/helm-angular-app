@@ -1,15 +1,17 @@
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: {{ include "common.names.fullname" . }}
+  name: {{ template "app.fullname" $ }}
   labels:
-    app: {{ include "common.names.fullname" . }}
-{{ include "angular.labels.common" $ | indent 4 }}
+    app: {{ template "app.fullname" $ }}
+{{ include "app.labels.common" $ | indent 4 }}
+  annotations:
+    description: {{ template "app.fullname" $ }}
 spec:
   selector:
-    app: {{ include "common.names.fullname" . }}
-{{ include "angular.labels.common" $ | indent 4 }}
+    app: {{ template "app.fullname" $ }}
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: {{ .Values.service.port }}
       targetPort: {{ .Values.pod.port }}
