@@ -10,11 +10,6 @@
     {{ if .Values.routing.backend }}{{ .Values.appId }}{{ else  }}{{ template "app.fullname" $ }}{{ end }}
 {{- end -}}
 
-
-{{- define "app.traefik.path" -}}
-    {{ if .Values.routing.path }} && PathPrefix(`{{ .Values.routing.path }}`){{ end }}
-{{- end -}}
-
 {{- define "app.routing.type" -}}
 {{ if .Values.global.routing.type }}{{ .Values.global.routing.type }}{{ else }}{{ .Values.routing.type }}{{ end }}
 {{- end -}}

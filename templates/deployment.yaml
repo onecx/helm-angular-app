@@ -97,11 +97,11 @@ spec:
           {{- if .Values.envCustom }} 
             {{- .Values.envCustom | toYaml | trim | nindent 10 }}
           {{- end }}
-
-        {{- if or (.Values.global.inject_maps) (.Values.inject_maps) }}
+       
         envFrom:
           - configMapRef:
               name: {{ template "app.fullname" $ }}-env
+          {{- if or (.Values.global.inject_maps) (.Values.inject_maps) }}              
           {{- $im := .Values.global.inject_maps -}}
           {{- if (.Values.inject_maps) }}
           {{- $im = concat .Values.inject_maps .Values.global.inject_maps | uniq -}}
@@ -112,4 +112,4 @@ spec:
               name: {{ $map_name }}
           {{- end }}
           {{- end }}
-        {{- end }}
+          {{- end }}

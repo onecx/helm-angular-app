@@ -17,7 +17,7 @@ spec:
     {{ end }}
   routes:
     - kind: Rule
-      match: Host(`{{ include "app.ingress.host" . | trim }}`){{ include "app.traefik.path" $ }}
+      match: Host(`{{ include "app.ingress.host" . | trim }}`){{ if .Values.routing.path }} && PathPrefix(`{{ .Values.routing.path }}`){{ end }}
       {{ if .Values.routing.traefik.middleware.enabled }}
       middlewares:
         - name: {{ .Values.routing.traefik.middleware.name }}
