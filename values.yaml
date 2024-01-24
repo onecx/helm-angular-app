@@ -74,6 +74,13 @@ routing:
       # traefik middleware name
       name: 
 
+  # custom service name and port for the routing
+  service:
+     # custom service name only for routing
+    name:
+     # custom service port only for routing
+    port:
+
 # Replicas
 replicas: 1
 

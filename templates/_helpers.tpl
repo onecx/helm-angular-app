@@ -14,6 +14,16 @@
 {{ if .Values.global.routing.type }}{{ .Values.global.routing.type }}{{ else }}{{ .Values.routing.type }}{{ end }}
 {{- end -}}
 
+{{- define "app.routing.service" -}}
+    {{- if .Values.routing.service.name -}}
+        {{- .Values.routing.service.name -}}
+    {{- else if .Values.service.name -}}
+        {{- .Values.service.name -}}
+    {{- else -}}
+        {{- template "app.fullname" $ }}
+    {{- end -}}
+{{- end -}}
+
 {{- define "app.ingress.host" -}}
     {{ if .Values.routing.backend }}
         {{ template "app.fullname" $ }}-{{ .Release.Namespace }}.{{ .Values.global.default_url | default .Values.routing.default_url }}

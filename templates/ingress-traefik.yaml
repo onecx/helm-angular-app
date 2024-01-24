@@ -24,7 +24,7 @@ spec:
       {{ end }}
       services:
         - kind: Service
-          name: {{ template "app.fullname" $ }}
-          port: {{ .Values.service.port }}
+          name: {{ include "app.routing.service" $ }}
+          port: {{ .Values.routing.service.port | default .Values.service.port }}
 {{ end }}
 {{ end }}
