@@ -10,6 +10,9 @@ global:
     keycloak:
       realm:
 
+  # node selector for the pods
+  nodeSelector:
+
 # Name of the instance, default {{ .Release.Name }}-{{ .Values.name | default .Chart.Name }}
 name:
 # ID of the application instance, default
@@ -40,6 +43,9 @@ readinessProbe:
 # start up probe configuration
 startupProbe:
   url: /healthcheck
+
+# node selector for the pods
+nodeSelector:
 
 # pod
 pod:

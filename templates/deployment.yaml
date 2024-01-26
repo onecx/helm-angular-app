@@ -36,6 +36,13 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.imagePullSecrets }}
       {{- end }}    
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+        {{- .Values.nodeSelector | toYaml | trim | nindent 8 }}
+      {{- else if .Values.global.nodeSelector }}
+      nodeSelector:
+        {{- .Values.global.nodeSelector | toYaml | trim | nindent 8 }}
+      {{- end }}      
       containers:
       - name: {{ include "app.fullname" . }}
         image: {{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
