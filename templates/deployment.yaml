@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "app.fullname" . }}
+  name: {{ include "app-angular.fullname" . }}
   labels:
-    app: {{ include "app.fullname" . }}
-{{ include "app.labels.common" $ | indent 4 }}  
+    app: {{ include "app-angular.fullname" . }}
+{{ include "app-angular.labels.common" $ | indent 4 }}  
 spec:
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: {{ include "app.fullname" . }}
+      app: {{ include "app-angular.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ include "app.fullname" . }}
-{{ include "app.labels.common" $ | indent 8 }}
+        app: {{ include "app-angular.fullname" . }}
+{{ include "app-angular.labels.common" $ | indent 8 }}
       annotations:
 {{- range $map_name := .Values.inject_maps }}
         checksum/{{ $map_name | replace "-" "_" }}: {{ index $.Values.global ($map_name | replace "-" "_") }}
@@ -27,9 +27,9 @@ spec:
         {{- if .Values.serviceAccount.name }}
       serviceAccountName: {{ .Values.serviceAccount.name }}
         {{- else if .Values.serviceAccountSuffix }} 
-      serviceAccountName: {{ template "quarkus.fullname" $ }}-{{ .Values.serviceAccount.suffix }}    
+      serviceAccountName: {{ template "app-angular.fullname" $ }}-{{ .Values.serviceAccount.suffix }}    
         {{ else }}
-      serviceAccountName: {{ template "quarkus.fullname" $ }}
+      serviceAccountName: {{ template "app-angular.fullname" $ }}
         {{- end }}
       {{- end }}    
       {{- if .Values.imagePullSecrets }}
@@ -44,7 +44,7 @@ spec:
         {{- .Values.global.nodeSelector | toYaml | trim | nindent 8 }}
       {{- end }}      
       containers:
-      - name: {{ include "app.fullname" . }}
+      - name: {{ include "app-angular.fullname" . }}
         image: {{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pull }}
         ports:
@@ -97,7 +97,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 key:  {{ $secret_key }}
-                name: {{ template "quarkus.fullname" $ }}-env
+                name: {{ template "app-angular.fullname" $ }}-env
           {{- end }}        
           {{- end }}
 
@@ -107,7 +107,7 @@ spec:
        
         envFrom:
           - configMapRef:
-              name: {{ template "app.fullname" $ }}-env
+              name: {{ template "app-angular.fullname" $ }}-env
           {{- if or (.Values.global.inject_maps) (.Values.inject_maps) }}              
           {{- $im := .Values.global.inject_maps -}}
           {{- if (.Values.inject_maps) }}

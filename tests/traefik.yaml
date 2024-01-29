@@ -1,9 +1,9 @@
+global:
+  hostName: test.com
+name: ui
 routing:
   enabled: true
   default_url: "change.com"
   type: traefik
-  path:
+  path: /mfe/
   bff: true
-  host:
-    override:
-    name:

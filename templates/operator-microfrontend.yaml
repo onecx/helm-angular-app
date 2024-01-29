@@ -2,14 +2,14 @@
 apiVersion: onecx.github.io/v1
 kind: Microfrontend
 metadata:
-  name: {{ include "app.fullname" . }}
+  name: {{ include "app-angular.fullname" . }}
   labels:
-    app: {{ include "app.fullname" . }}
-{{ include "app.labels.common" $ | indent 4 }}    
+    app: {{ include "app-angular.fullname" . }}
+{{ include "app-angular.labels.common" $ | indent 4 }}    
 spec:
-  appId: {{ .Values.operator.microfrontend.spec.appId | default (include "app.id" .) }} 
-  appName: {{ .Values.operator.microfrontend.spec.appName | default (include "app.fullname" .) }} 
-  appVersion: {{ template "app.version" $ }}
+  appId: {{ .Values.operator.microfrontend.spec.appId | default (include "app-angular.id" .) }} 
+  appName: {{ .Values.operator.microfrontend.spec.appName | default (include "app-angular.fullname" .) }} 
+  appVersion: {{ template "app-angular.version" $ }}
   classifications: {{ .Values.operator.microfrontend.spec.classifications }} 
   contact: {{ .Values.operator.microfrontend.spec.contact }} 
   description: {{ .Values.operator.microfrontend.spec.description }} 

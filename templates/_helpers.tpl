@@ -1,44 +1,44 @@
-{{- define "app.fullname" -}}
+{{- define "app-angular.fullname" -}}
     {{ .Release.Name }}-{{ .Values.name | default .Chart.Name }}
 {{- end -}}
 
-{{- define "app.version" -}}
+{{- define "app-angular.version" -}}
     {{ .Values.image.tag }} 
 {{- end -}}
 
-{{- define "app.id" -}}
-    {{ if .Values.routing.backend }}{{ .Values.appId }}{{ else  }}{{ template "app.fullname" $ }}{{ end }}
+{{- define "app-angular.id" -}}
+    {{ if .Values.routing.backend }}{{ .Values.appId }}{{ else  }}{{ template "app-angular.fullname" $ }}{{ end }}
 {{- end -}}
 
-{{- define "app.routing.type" -}}
+{{- define "app-angular.routing.type" -}}
 {{ if .Values.global.routing.type }}{{ .Values.global.routing.type }}{{ else }}{{ .Values.routing.type }}{{ end }}
 {{- end -}}
 
-{{- define "app.routing.service" -}}
+{{- define "app-angular.routing.service" -}}
     {{- if .Values.routing.service.name -}}
         {{- .Values.routing.service.name -}}
     {{- else if .Values.service.name -}}
         {{- .Values.service.name -}}
     {{- else -}}
-        {{- template "app.fullname" $ }}
+        {{- template "app-angular.fullname" $ }}
     {{- end -}}
 {{- end -}}
 
-{{- define "app.ingress.host" -}}
+{{- define "app-angular.ingress.host" -}}
     {{ if .Values.routing.backend }}
-        {{ template "app.fullname" $ }}-{{ .Release.Namespace }}.{{ .Values.global.default_url | default .Values.routing.default_url }}
+        {{ template "app-angular.fullname" $ }}-{{ .Release.Namespace }}.{{ .Values.global.default_url | default .Values.routing.default_url }}
     {{ else if .Values.routing.hostName }}
         {{ .Values.routing.hostName }}
     {{ else if .Values.global.hostName }}
         {{ .Values.global.hostName }}
     {{ else  }}
-        {{ template "app.fullname" $ }}-{{ .Release.Namespace }}.{{ .Values.global.default_url | default .Values.routing.default_url }}
+        {{ template "app-angular.fullname" $ }}-{{ .Release.Namespace }}.{{ .Values.global.default_url | default .Values.routing.default_url }}
     {{ end }}
 {{- end -}}
 
-{{- define "app.labels.common" -}}
+{{- define "app-angular.labels.common" -}}
 version: {{ .Values.version | default .Values.image.tag | quote }}
 helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
 app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
-app.kubernetes.io/name: {{ template "app.fullname" $ }}
+app.kubernetes.io/name: {{ template "app-angular.fullname" $ }}
 {{- end -}}
