@@ -18,7 +18,7 @@ global:
   - key: "arch"
     operator: "Equal"
     value: "arm64"
-    effect: "NoSchedule":
+    effect: "NoSchedule"
 
 
 # Name of the instance, default {{ .Release.Name }}-{{ .Values.name | default .Chart.Name }}
