@@ -42,6 +42,13 @@ spec:
       {{- else if .Values.global.nodeSelector }}
       nodeSelector:
         {{- .Values.global.nodeSelector | toYaml | trim | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations:
+        {{- .Values.tolerations | toYaml | trim | nindent 8 }}
+      {{- else if .Values.global.tolerations }}
+      tolerations:
+        {{- .Values.global.tolerations | toYaml | trim | nindent 8 }}
       {{- end }}      
       containers:
       - name: {{ include "app-angular.fullname" . }}
