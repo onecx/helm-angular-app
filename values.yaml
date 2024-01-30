@@ -15,12 +15,7 @@ global:
 
   # tolerations for the pods
   tolerations:
-  - key: "arch"
-    operator: "Equal"
-    value: "arm64"
-    effect: "NoSchedule"
-
-
+  
 # Name of the instance, default {{ .Release.Name }}-{{ .Values.name | default .Chart.Name }}
 name:
 # ID of the application instance, default
@@ -54,6 +49,9 @@ startupProbe:
 
 # node selector for the pods
 nodeSelector:
+
+# tolerations for the pods
+tolerations:
 
 # pod
 pod:
