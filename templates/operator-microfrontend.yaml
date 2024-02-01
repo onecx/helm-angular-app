@@ -1,5 +1,5 @@
 {{ if .Values.operator.microfrontend.enabled }}
-apiVersion: onecx.github.io/v1
+apiVersion: onecx.tkit.org/v1
 kind: Microfrontend
 metadata:
   name: {{ include "app-angular.fullname" . }}
@@ -16,6 +16,8 @@ spec:
   exposedModule: {{ .Values.operator.microfrontend.spec.exposedModule }}
   iconName: {{ .Values.operator.microfrontend.spec.iconName }}
   note: {{ .Values.operator.microfrontend.spec.note }}
+  tagName: {{ .Values.operator.microfrontend.spec.tagName }}
+  remoteName: {{ .Values.operator.microfrontend.spec.remoteName }}  
   productName: {{ .Values.operator.microfrontend.spec.productName | default .Release.Name }}
   remoteBaseUrl: {{ .Values.operator.microfrontend.spec.remoteBaseUrl | default .Values.routing.path }}
   remoteEntry: {{ .Values.operator.microfrontend.spec.remoteBaseUrl | default .Values.routing.path }}{{ .Values.operator.microfrontend.entrySuffix }}

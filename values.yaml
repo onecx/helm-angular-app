@@ -121,6 +121,10 @@ operator:
     spec:      
       # default deployment name (release_name-name)
       appId:
+      # application name (release_name-name)
+      name:
+      # application description (release_name-name)
+      description:      
       # map of permissions
       # resource:
       #    action: description
@@ -142,8 +146,9 @@ operator:
       exposedModule: change-me
       
       iconName:
-
       note: change-me
+      remoteName:
+      tagName:
 
       # list of strings
       classifications: []      
