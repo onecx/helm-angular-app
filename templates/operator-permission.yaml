@@ -8,7 +8,7 @@ metadata:
 {{ include "app-angular.labels.common" $ | indent 4 }}    
 spec:
   appId: {{ .Values.operator.permission.spec.appId | default (include "app-angular.fullname" .) }} 
-  name: {{ .Values.operator.permission.spec.name | default (include "app.fullname" .) }}
-  description: appId: {{ .Values.operator.permission.spec.description | default (include "app.fullname" .) }}  
+  name: {{ .Values.operator.permission.spec.name | default (include "app-angular.fullname" .) }}
+  description: appId: {{ .Values.operator.permission.spec.description | default (include "app-angular.fullname" .) }}  
   permissions: {{ if .Values.operator.permission.spec.permissions }}{{ .Values.operator.permission.spec.permissions | toYaml | nindent 4 }}{{- end }}  
 {{- end }}
