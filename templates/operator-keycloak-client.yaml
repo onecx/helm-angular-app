@@ -1,0 +1,29 @@
+{{ if .Values.operator.keycloak.client.enabled }}
+apiVersion: onecx.tkit.org/v1
+kind: KeycloakClient
+metadata:
+  name: {{ include "app-angular.fullname" . }}
+  labels:
+    app: {{ include "app-angular.fullname" . }}
+{{ include "app-angular.labels.common" $ | indent 4 }}    
+spec:
+  realm: {{ .Values.operator.keycloak.client.spec.realm }} 
+  type: {{ .Values.operator.keycloak.client.spec.type }} 
+  kcConfig:
+    clientId: {{ .Values.operator.keycloak.client.spec.kcConfig.clientId | default (include "app-angular.fullname" .) }}
+    description: {{ .Values.operator.keycloak.client.spec.kcConfig.description }}
+    enabled: {{ .Values.operator.keycloak.client.spec.kcConfig.enabled }}
+    clientAuthenticatorType: {{ .Values.operator.keycloak.client.spec.kcConfig.clientAuthenticatorType }}
+    redirectUris: {{ if .Values.operator.keycloak.client.spec.kcConfig.redirectUris }}{{ .Values.operator.keycloak.client.spec.kcConfig.redirectUris | toYaml | nindent 4 }}{{- end }}  
+    webOrigins: {{ if .Values.operator.keycloak.client.spec.kcConfig.webOrigins }}{{ .Values.operator.keycloak.client.spec.kcConfig.webOrigins | toYaml | nindent 4 }}{{- end }}  
+    bearerOnly: {{ .Values.operator.keycloak.client.spec.kcConfig.bearerOnly }}
+    standardFlowEnabled: {{ .Values.operator.keycloak.client.spec.kcConfig.standardFlowEnabled }}
+    implicitFlowEnabled: {{ .Values.operator.keycloak.client.spec.kcConfig.implicitFlowEnabled }}
+    directAccessGrantsEnabled: {{ .Values.operator.keycloak.client.spec.kcConfig.directAccessGrantsEnabled }}
+    serviceAccountsEnabled: {{ .Values.operator.keycloak.client.spec.kcConfig.serviceAccountsEnabled }}
+    publicClient: {{ .Values.operator.keycloak.client.spec.kcConfig.publicClient }}
+    protocol: {{ .Values.operator.keycloak.client.spec.kcConfig.protocol }}
+    defaultClientScopes: {{ if .Values.operator.keycloak.client.spec.kcConfig.defaultClientScopes }}{{ .Values.operator.keycloak.client.spec.kcConfig.defaultClientScopes | toYaml | nindent 4 }}{{- end }}  
+    optionalClientScopes: {{ if .Values.operator.keycloak.client.spec.kcConfig.optionalClientScopes }}{{ .Values.operator.keycloak.client.spec.kcConfig.optionalClientScopes | toYaml | nindent 4 }}{{- end }}  
+    attributes: {{ if .Values.operator.keycloak.client.spec.kcConfig.attributes }}{{ .Values.operator.keycloak.client.spec.kcConfig.attributes | toYaml | nindent 6 }}{{- end }}  
+{{- end }}
