@@ -118,7 +118,9 @@ operator:
     # enable or disable configuration for operator
     enabled: false
 
-    spec:      
+    spec:
+      # default release name (product name)
+      productName:
       # default deployment name (release_name-name)
       appId:
       # application name (release_name-name)
