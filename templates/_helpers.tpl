@@ -2,6 +2,11 @@
     {{ .Release.Name }}-{{ .Values.name | default .Chart.Name }}
 {{- end -}}
 
+{{- define "app-angular.product.name" -}}
+    {{ .Release.Name }}
+{{- end -}}
+
+
 {{- define "app-angular.version" -}}
     {{ .Values.image.tag }} 
 {{- end -}}
@@ -34,6 +39,14 @@
     {{ else  }}
         {{ template "app-angular.fullname" $ }}-{{ .Release.Namespace }}.{{ .Values.global.default_url | default .Values.routing.default_url }}
     {{ end }}
+{{- end -}}
+
+{{- define "app-angular.permission.product.name" -}}
+    {{- if .Values.operator.permission.spec.productName -}}
+        {{- .Values.operator.permission.spec.productName -}}
+    {{- else -}}
+        {{ include "app-angular.product.name" $ }}
+    {{- end -}}
 {{- end -}}
 
 {{- define "app-angular.labels.common" -}}

@@ -8,4 +8,5 @@ metadata:
 data:
   APP_VERSION: {{ .Values.image.tag }}
   APP_ID: {{ template "app-angular.id" $ }}
+  PRODUCT_NAME: {{ include "app-angular.permission.product.name" $ }}
   {{ if and .Values.routing.enabled .Values.routing.path }}APP_BASE_HREF: {{ .Values.routing.path }}{{ end }}
