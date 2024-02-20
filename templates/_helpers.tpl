@@ -49,6 +49,14 @@
     {{- end -}}
 {{- end -}}
 
+{{- define "app-angular.microservice.product.name" -}}
+    {{- if .Values.operator.microservice.spec.productName -}}
+        {{- .Values.operator.microservice.spec.productName -}}
+    {{- else -}}
+        {{ include "app-angular.product.name" $ }}
+    {{- end -}}
+{{- end -}}
+
 {{- define "app-angular.labels.common" -}}
 version: {{ .Values.version | default .Values.image.tag | quote }}
 helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
