@@ -1,0 +1,18 @@
+{{ if .Values.operator.slot.enabled }}
+{{- range $item_name, $item_spec := .Values.operator.slot.specs }}
+---
+apiVersion: onecx.tkit.org/v1
+kind: Slot
+metadata:
+  name: {{ include "app-angular.fullname" $ }}-{{ $item_name }}
+  labels:
+    app: {{ include "app-angular.fullname" $ }}
+{{ include "app-angular.labels.common" $ | indent 4 }}    
+spec:
+  productName: {{ $item_spec.productName | default (include "app-angular.product.name" $) }}
+  appId: {{ $item_spec.appId | default (include "app-angular.id" $) }} 
+  name: {{ $item_spec.name | default $item_name }}    
+  description: {{ $item_spec.description | default $.Values.operator.slot.spec.description }} 
+  deprecated: {{ $item_spec.deprecated | default $.Values.operator.slot.spec.deprecated }}
+{{- end }}
+{{- end }}

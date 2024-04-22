@@ -1,0 +1,15 @@
+operator:
+  slot:
+    enabled: true
+    specs:
+      menu: 
+        name: "menu"
+      horizontal:
+        name: "horizontalMenu"
+      headerRight:
+        name: "headerRight"
+      subHeader:
+        name: "subHeader"              
+    spec:
+      description: "OneCX Product Store UI 2"
+      deprecated: false

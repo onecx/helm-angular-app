@@ -149,6 +149,23 @@ operator:
       #    action: description
       permissions:
 
+  # slot
+  slot:
+    # enable or disable configuration for operator
+    enabled: false
+    
+    # map of <name, spec> of mfe spec ( see spec )
+    specs:
+
+    # definnition and default values for the list of spec 'specs'
+    spec:
+      # name of the slot ( ref. id to sour code of the app)
+      name:      
+      # deprecated true | false
+      deprecated: false
+      # description text
+      description: change-me
+
   # microfrontend
   microfrontend:
     # enable or disable configuration for operator
