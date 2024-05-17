@@ -1,6 +1,12 @@
 {{- define "app-angular.fullname" -}}
-    {{ .Release.Name }}-{{ .Values.name | default .Chart.Name }}
+    {{- $product := .Values.product | default true -}}
+    {{- if $product -}}
+        {{ .Release.Name }}-{{ .Values.name | default .Chart.Name }}
+    {{- else -}}
+        {{ .Release.Name }}
+    {{- end -}}
 {{- end -}}
+
 
 {{- define "app-angular.product.name" -}}
     {{ .Release.Name }}
