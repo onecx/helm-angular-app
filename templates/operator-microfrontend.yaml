@@ -22,7 +22,7 @@ spec:
   remoteName: {{ $mfe_spec.remoteName }}  
   productName: {{ $mfe_spec.productName | default (include "app-angular.product.name" $) }}
   remoteBaseUrl: {{ $mfe_spec.remoteBaseUrl | default $.Values.routing.path }}
-  remoteEntry: {{ $mfe_spec.remoteBaseUrl | default $.Values.routing.path }}{{ $.Values.operator.microfrontend.entrySuffix }}
+  remoteEntry: {{ $mfe_spec.remoteEntry | default $.Values.routing.path }}{{ $.Values.operator.microfrontend.entrySuffix }}
   technology: {{ $mfe_spec.technology | default $.Values.operator.microfrontend.spec.technology }}
   type: {{ $mfe_spec.type | default $.Values.operator.microfrontend.spec.type }}
   deprecated: {{ $mfe_spec.deprecated | default $.Values.operator.microfrontend.spec.deprecated }}
