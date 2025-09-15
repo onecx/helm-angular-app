@@ -47,6 +47,13 @@ readinessProbe:
 startupProbe:
   url: /healthcheck
 
+# Define the resources for main container
+resources:
+  requests:
+    memory: 200Mi
+  limits:
+    memory: 300Mi
+
 # node selector for the pods
 nodeSelector:
 
