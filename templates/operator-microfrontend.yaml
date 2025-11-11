@@ -33,5 +33,5 @@ spec:
       path: {{ $item.path }}
   {{- end }}
   {{- end }}
-{{- end }} 
+{{- end }}
 {{- end }} 

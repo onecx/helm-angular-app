@@ -1,0 +1,27 @@
+{{ if .Values.operator.parameter.enabled }}
+{{ if .Values.operator.parameter.spec.parameters }}
+{{- range $orgId, $parameters := .Values.operator.parameter.spec.parameters }}
+---
+apiVersion: onecx.tkit.org/v1
+kind: Parameter
+metadata:
+  name: {{ include "app-angular.fullname" $ }}-{{ $orgId }}
+  labels:
+    app: {{ include "app-angular.fullname" $ }}
+{{ include "app-angular.labels.common" $ | indent 4 }}
+spec:
+  productName: {{ $.Values.operator.parameter.spec.productName | default (include "app-angular.product.name" $) }}
+  applicationId: {{ $.Values.operator.parameter.spec.appId | default (include "app-angular.fullname" $) }} 
+  key: {{ $.Values.operator.parameter.spec.key | default "onecx" }} 
+  orgId: {{ $orgId }}
+  parameters: 
+   {{- range $name, $parameter := $parameters }}
+   {{ $name }}:
+      description: {{ $parameter.description }}
+      displayName: {{ $parameter.displayName }}
+      value: {{ $parameter.value | toJson | squote }}
+   {{- end }}
+  
+{{- end }}
+{{- end }}
+{{- end }}

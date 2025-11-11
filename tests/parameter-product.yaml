@@ -1,0 +1,12 @@
+operator:
+  parameter:
+    enabled: true
+    spec:
+      productName: my-product
+      applicationId: my-app
+      parameters:
+        default:
+          param1:
+            displayName:
+            description:
+            value: true
