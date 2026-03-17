@@ -26,6 +26,7 @@ spec:
   technology: {{ $mfe_spec.technology | default $.Values.operator.microfrontend.spec.technology }}
   type: {{ $mfe_spec.type | default $.Values.operator.microfrontend.spec.type }}
   deprecated: {{ $mfe_spec.deprecated | default $.Values.operator.microfrontend.spec.deprecated }}
+  shareScope: {{ $mfe_spec.shareScope | default $.Values.operator.microfrontend.spec.shareScope }}
   {{ if ($mfe_spec.endpoints) }}  
   endpoints:
   {{- range $item := $mfe_spec.endpoints }}
